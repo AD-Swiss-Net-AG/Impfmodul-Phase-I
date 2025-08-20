@@ -25,26 +25,22 @@
         <junit.version>5.9.3</junit.version>
         <fhir.version>7.4.0</fhir.version>
         <org.hl7.fhir.version>6.3.23</org.hl7.fhir.version>
-        <artefactory.repoUrl>
-            https://adswissnetag.jfrog.io/artifactory/ad-swiss-release
-        </artefactory.repoUrl>
-        <artefactory.repoUrl-sn>
-            https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot
-        </artefactory.repoUrl-sn>
+        <artifactory.repoUrl-sn>https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot</artifactory.repoUrl-sn>
+        <artifactory.repoUrl>https://adswissnetag.jfrog.io/artifactory/ad-swiss-release</artifactory.repoUrl>
     </properties>
 
     <scm>
-        <connection>scm:git:https://github.com/AD-Swiss-Net-AG/adswiss-ci-service.git</connection>
-        <developerConnection>scm:git:https://github.com/AD-Swiss-Net-AG/adswiss-ci-service.git</developerConnection>
-        <url>https://github.com/AD-Swiss-Net-AG/adswiss-ci-service</url>
+        <connection>scm:git:https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I.git</connection>
+        <developerConnection>scm:git:https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I.git</developerConnection>
+        <url>https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I</url>
         <tag>HEAD</tag>
     </scm>
 
     <repositories>
         <repository>
-            <id>artefactory-sn</id>
+            <id>artifactory-sn</id>
             <name>ADS SNAPSHOT Package Repo</name>
-            <url>${artefactory.repoUrl-sn}</url>
+            <url>${artifactory.repoUrl-sn}</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -53,9 +49,9 @@
             </snapshots>
         </repository>
         <repository>
-            <id>artefactory</id>
+            <id>artifactory</id>
             <name>ADS Package Repo</name>
-            <url>${artefactory.repoUrl}</url>
+            <url>${artifactory.repoUrl}</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -67,14 +63,14 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>artefactory-sn</id>
+            <id>artifactory-sn</id>
             <name>Github SNAPSHOT Package Repo</name>
-            <url>${artefactory.repoUrl-sn}</url>
+            <url>${artifactory.repoUrl-sn}</url>
         </snapshotRepository>
         <repository>
-            <id>artefactory</id>
+            <id>artifactory</id>
             <name>Github Package Repo</name>
-            <url>${artefactory.repoUrl}</url>
+            <url>${artifactory.repoUrl}</url>
         </repository>
     </distributionManagement>
     <dependencyManagement>
@@ -252,6 +248,13 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>

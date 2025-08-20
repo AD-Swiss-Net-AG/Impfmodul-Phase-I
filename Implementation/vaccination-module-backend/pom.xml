@@ -35,15 +35,23 @@
         <xmlsectool.version>3.0.0</xmlsectool.version>
         <pdfbox.version>2.0.30</pdfbox.version>
         <hazelcast.version>5.3.5</hazelcast.version>
-        <artefactory.repoUrl>
-            https://adswissnetag.jfrog.io/artifactory/ad-swiss-release
-        </artefactory.repoUrl>
-        <artefactory.repoUrl-sn>
-            https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot
-        </artefactory.repoUrl-sn>
+        <artifactory.repoUrl-sn>https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot</artifactory.repoUrl-sn>
+        <artifactory.repoUrl>https://adswissnetag.jfrog.io/artifactory/ad-swiss-release</artifactory.repoUrl>
     </properties>
 
+    <scm>
+        <connection>scm:git:https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I.git</connection>
+        <developerConnection>scm:git:https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I.git</developerConnection>
+        <url>https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <repositories>
+        <repository>
+            <id>local-maven-repo</id>
+            <name>HuskyLocal</name>
+            <url>file:${project.basedir}/lib/local-maven-repo</url>
+        </repository>
         <!-- used for latest OpenSAML version -->
         <repository>
             <id>Shibboleth</id>
@@ -51,9 +59,9 @@
             <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
         </repository>
         <repository>
-            <id>artefactory-sn</id>
+            <id>artifactory-sn</id>
             <name>ADS SNAPSHOT Package Repo</name>
-            <url>${artefactory.repoUrl-sn}</url>
+            <url>${artifactory.repoUrl-sn}</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -62,9 +70,9 @@
             </snapshots>
         </repository>
         <repository>
-            <id>artefactory</id>
+            <id>artifactory</id>
             <name>ADS Package Repo</name>
-            <url>${artefactory.repoUrl}</url>
+            <url>${artifactory.repoUrl}</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -72,26 +80,24 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <!-- used for FHIR Adapter library -->
+        <repository>
+            <id>fhirAdapter</id>
+            <url>https://innersource.soprasteria.com/api/v4/projects/150475/packages/maven</url>
+        </repository>
     </repositories>
-
-    <scm>
-        <connection>scm:git:https://github.com/AD-Swiss-Net-AG/adswiss-ci-service.git</connection>
-        <developerConnection>scm:git:https://github.com/AD-Swiss-Net-AG/adswiss-ci-service.git</developerConnection>
-        <url>https://github.com/AD-Swiss-Net-AG/adswiss-ci-service</url>
-        <tag>HEAD</tag>
-    </scm>
 
     <!-- Internal use for Sopra Steria only -->
     <distributionManagement>
         <snapshotRepository>
-            <id>artefactory-sn</id>
+            <id>artifactory-sn</id>
             <name>Github SNAPSHOT Package Repo</name>
-            <url>${artefactory.repoUrl-sn}</url>
+            <url>${artifactory.repoUrl-sn}</url>
         </snapshotRepository>
         <repository>
-            <id>artefactory</id>
+            <id>artifactory</id>
             <name>Github Package Repo</name>
-            <url>${artefactory.repoUrl}</url>
+            <url>${artifactory.repoUrl}</url>
         </repository>
     </distributionManagement>
     <dependencyManagement>
@@ -533,6 +539,13 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>
