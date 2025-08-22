@@ -1,0 +1,49 @@
+name: Build and Publish to Artifactory
+
+on:
+  push:
+    branches:
+      - main # Passen Sie den Branch-Namen bei Bedarf an
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      GITHUB_USER: ${{ secrets.IT_AD_SWISS_USER }}
+      GITHUB_TOKEN: ${{ secrets.PAT_IT_ADSWISS }}
+      ARTIFACTORY_URL: ${{ secrets.EPD_ARTIFACTORY_RELEASE_URL }}
+      ARTIFACTORY_DEPLOY_USER: ${{ secrets.EPD_ARTIFACTORY_USER }}
+      ARTIFACTORY_DEPLOY_USER_PWD: ${{ secrets.EPD_ARTIFACTORY_PWD }}
+
+    steps:
+      - name: Checkout Quellcode
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_IT_ADSWISS }}
+
+      - name: Java (JDK) einrichten
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+          server-id: 'artifactory'
+
+      - name: Configure Git User
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
+      - name: Build and Deploy fhir-adapter
+        run: mvn clean deploy -B -f Implementation/fhir-adapter/pom.xml -s $GITHUB_WORKSPACE/settings.xml
+
+      - name: Build and Deploy vaccination-module-backend
+        run: mvn clean deploy -B -DskipTests -f Implementation/vaccination-module-backend/pom.xml -s $GITHUB_WORKSPACE/settings.xml
+
+      - name: Build and Deploy vaccination-module-frontend
+        run: mvn clean deploy -B -f Implementation/vaccination-module-frontend/pom.xml -s $GITHUB_WORKSPACE/settings.xml
