@@ -4,30 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.admin.bag</groupId>
     <artifactId>fhir-adapter</artifactId>
-    <version>1.1.9</version>
+    <version>1.2.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.5.0</version>
     </parent>
 
     <name>FHIR Adapter library</name>
     <description>Library to transform FHIR into domain objects and vice versa.</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-        <java.version>17</java.version>
-        <maven.compiler.release>17</maven.compiler.release>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <junit.version>5.9.3</junit.version>
-        <fhir.version>7.4.0</fhir.version>
-        <org.hl7.fhir.version>6.3.23</org.hl7.fhir.version>
-        <artifactory.repoUrl-sn>https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot</artifactory.repoUrl-sn>
-        <artifactory.repoUrl>https://adswissnetag.jfrog.io/artifactory/ad-swiss-release</artifactory.repoUrl>
-    </properties>
 
     <scm>
         <connection>scm:git:https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I.git</connection>
@@ -35,6 +21,20 @@
         <url>https://github.com/AD-Swiss-Net-AG/Impfmodul-Phase-I</url>
         <tag>HEAD</tag>
     </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <java.version>21</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <junit.version>5.9.3</junit.version>
+        <fhir.version>8.0.0</fhir.version>
+        <org.hl7.fhir.version>6.5.20</org.hl7.fhir.version>
+        <artifactory.repoUrl-sn>https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot</artifactory.repoUrl-sn>
+        <artifactory.repoUrl>https://adswissnetag.jfrog.io/artifactory/ad-swiss-release</artifactory.repoUrl>
+    </properties>
 
     <repositories>
         <repository>
@@ -61,18 +61,6 @@
         </repository>
     </repositories>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>artifactory-sn</id>
-            <name>Github SNAPSHOT Package Repo</name>
-            <url>${artifactory.repoUrl-sn}</url>
-        </snapshotRepository>
-        <repository>
-            <id>artifactory</id>
-            <name>Github Package Repo</name>
-            <url>${artifactory.repoUrl}</url>
-        </repository>
-    </distributionManagement>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -149,7 +137,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.10.1</version>
+                    <version>3.14.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
@@ -165,7 +153,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.8</version>
+                    <version>0.8.13</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -258,4 +246,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>artifactory</id>
+            <name>Github Package Repo</name>
+            <url>${artifactory.repoUrl}</url>
+        </repository>
+        <snapshotRepository>
+            <id>artifactory-sn</id>
+            <name>Github SNAPSHOT Package Repo</name>
+            <url>${artifactory.repoUrl-sn}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
