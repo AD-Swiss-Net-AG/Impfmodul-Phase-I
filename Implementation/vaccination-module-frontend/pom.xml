@@ -7,7 +7,7 @@
   <!-- Passen Sie groupId, artifactId und version nach Bedarf an -->
   <groupId>ch.admin.bag.vaccination</groupId>
   <artifactId>vaccination-module-frontend</artifactId>
-  <version>1.8.0-RC1</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
 
   <properties>

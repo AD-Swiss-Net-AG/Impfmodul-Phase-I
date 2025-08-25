@@ -45,5 +45,10 @@ jobs:
       - name: Build and Deploy vaccination-module-backend
         run: mvn clean deploy -B -DskipTests -f Implementation/vaccination-module-backend/pom.xml -s $GITHUB_WORKSPACE/settings.xml
 
+      - name: get frontend version
+        id: extract_version
+        run: |
+          VERSION=$(node -p "require('./Implementation/vaccination-module-frontend/package.json').version")
+          echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
       - name: Build and Deploy vaccination-module-frontend
-        run: mvn clean deploy -B -f Implementation/vaccination-module-frontend/pom.xml -s $GITHUB_WORKSPACE/settings.xml
+        run: mvn clean deploy -B -f Implementation/vaccination-module-frontend/pom.xml -s $GITHUB_WORKSPACE/settings.xml -Drevision=${PACKAGE_VERSION}
