@@ -18,7 +18,7 @@ spring:
       file:${vaccination_config:config}/fhir.yml,
       file:${vaccination_config:config}/valuelists/vaccines-to-targetdiseases.yml,
       file:${vaccination_config:config}/valuelists/pdf-output.yml,
-      file:${vaccination_config:config}/logging.properties
+      optional:file:${vaccination_config:config}/logging.properties
   banner:
     location: banner.txt
   mvc:
@@ -27,8 +27,6 @@ spring:
 
 # Logging Configuration
 logging:
-  level:
-    root: INFO
   file:
     name: ${LOG_PATH:/opt/adswiss/vaccination-module/log}/vacc-backend.log
   logback:
@@ -36,6 +34,8 @@ logging:
       file-name-pattern: ${LOG_PATH:/opt/adswiss/vaccination-module/log}/archived/vacc-backend-%d{yyyy-MM-dd}.%i.log.gz
       max-file-size: 50MB
       max-history: 30
+  level:
+    root: DEBUG
 
 # path for actuator
 management:
