@@ -1,5 +1,9 @@
 server:
   port: 8080
+  servlet:
+    context-path: /vaccination-module-backend
+  forward-headers-strategy: framework
+
 spring:
   application:
     name: Vaccination Module for the EPR
@@ -14,12 +18,14 @@ spring:
       file:${vaccination_config:config}/fhir.yml,
       file:${vaccination_config:config}/valuelists/vaccines-to-targetdiseases.yml,
       file:${vaccination_config:config}/valuelists/pdf-output.yml,
-      file:${vaccination_config:config}/logging.properties
   banner:
     location: banner.txt
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+logging:
+  config: ${vaccination_config:config}/logging.properties
 
 # path for actuator
 management:
