@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!-- use Spring default values -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <springProperty scope="context" name="application.title" source="application.title" />
+    <!-- Der Pfad ist relativ zum Startverzeichnis der Anwendung -->
+    <property name="base.folder" value="." />
+
+    <!-- Diese Konfiguration wird nur für das 'local' Profil aktiviert -->
+    <springProfile name="local, prod">
+        <appender name="Console"
+                  class="ch.qos.logback.core.ConsoleAppender">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <Pattern>%d{ISO8601} %-5level [%t] ${application.title} - %C{0}#%M:%L: %msg%n%throwable</Pattern>
+            </layout>
+        </appender>
+
+        <appender name="RollingFile"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${base.folder}/logs/${application.title}.log</file>
+            <encoder
+                    class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>%d{ISO8601} %p [%t] - %C{0}#%M:%L: %m%n</Pattern>
+            </encoder>
+
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${base.folder}/logs/archived/${application.title}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>50MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <!-- LOG everything at INFO level -->
+        <root level="info">
+            <!-- Fehlerhafte Zeichen wurden hier entfernt -->
+            <appender-ref ref="RollingFile" />
+            <appender-ref ref="Console" />
+        </root>
+
+        <!-- LOG "ch.admin.bag" at DEBUG level -->
+        <logger name="ch.admin.bag" level="debug" additivity="false">
+            <appender-ref ref="RollingFile" />
+            <appender-ref ref="Console" />
+        </logger>
+
+    </springProfile>
+
+</configuration>

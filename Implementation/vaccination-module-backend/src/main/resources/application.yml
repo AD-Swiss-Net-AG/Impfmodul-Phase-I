@@ -18,24 +18,12 @@ spring:
       file:${vaccination_config:config}/fhir.yml,
       file:${vaccination_config:config}/valuelists/vaccines-to-targetdiseases.yml,
       file:${vaccination_config:config}/valuelists/pdf-output.yml,
-      optional:file:${vaccination_config:config}/logging.properties
+      file:${vaccination_config:config}/logging.properties
   banner:
     location: banner.txt
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
-# Logging Configuration
-logging:
-  file:
-    name: ${LOG_PATH:/opt/adswiss/vaccination-module/log}/vacc-backend.log
-  logback:
-    rollingpolicy:
-      file-name-pattern: ${LOG_PATH:/opt/adswiss/vaccination-module/log}/archived/vacc-backend-%d{yyyy-MM-dd}.%i.log.gz
-      max-file-size: 50MB
-      max-history: 30
-  level:
-    root: DEBUG
 
 # path for actuator
 management:
@@ -63,6 +51,7 @@ hazelcast:
 
 # Application relevant configuration
 application:
+  title: vaccination-module-backend
   # local mode: only set during dev!
   localMode: ${LOCALMODE:false}
   # husky local mode: only set during dev!
