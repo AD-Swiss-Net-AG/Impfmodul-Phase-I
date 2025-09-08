@@ -1,0 +1,69 @@
+name: Install Delivery
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifact:
+        description: 'Id of the artifact'
+        required: true
+        type: choice
+        options:
+          - vaccination-module-backend
+          - vaccination-module-frontend
+      version:
+        description: 'Version of the artifact'
+        required: true
+      stage:
+        description: 'Select Stage'
+        required: true
+        type: choice
+        options:
+          - dev
+          - int
+
+jobs:
+  echo_selected_options:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Echo selected options
+        run: |
+          echo "${{ github.event.inputs.artifact }} version: ${{ github.event.inputs.version }}"
+
+      - name: Write certificate and key to files
+        run: |
+          echo "${{ secrets.ADSWISS_TOWER_CRT }}" > client.crt
+          echo "${{ secrets.ADSWISS_TOWER_KEY }}" > client.key
+
+      - name: Call REST API with JSON and Client Certificate for Vaccination Module
+        run: |
+          python - <<EOF
+          import requests
+          import json
+          import os
+
+          url = 'https://tower.adswiss.hin.ch/github/deploy/epd-app'
+          data = {
+              'artifactId': '${{ github.event.inputs.artifact }}',
+              'groupId': 'ch.admin.bag.vaccination',
+              'version': '${{ github.event.inputs.version }}',
+              'stage': '${{ github.event.inputs.stage }}'
+          }
+          json_data = json.dumps(data)
+          cert_path = 'client.crt'
+          key_path = 'client.key'
+
+          response = requests.post(url, data=json_data, headers={'Content-Type': 'application/json'}, cert=(cert_path, key_path))
+
+          print(response.status_code)
+          if response.status_code != 503:
+              try:
+                  print(response.json())
+              except json.JSONDecodeError:
+                  print("Failed to decode JSON response")
+          else:
+              print("Service Unavailable (503)")
+          EOFs

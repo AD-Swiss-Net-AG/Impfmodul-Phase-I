@@ -36,6 +36,7 @@
         <tomcat.version>11.0.8</tomcat.version>
         <artifactory.repoUrl-sn>https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot</artifactory.repoUrl-sn>
         <artifactory.repoUrl>https://adswissnetag.jfrog.io/artifactory/ad-swiss-release</artifactory.repoUrl>
+        <jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
     </properties>
 
     <repositories>
@@ -149,6 +150,13 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>5.14.2</version>
+            </dependency>
+
+            <!-- JASYPT Configuration -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt-spring-boot-starter.version}</version>
             </dependency>
 
             <!-- Hapi Fhir -->
