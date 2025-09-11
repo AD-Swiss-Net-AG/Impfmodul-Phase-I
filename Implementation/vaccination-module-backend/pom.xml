@@ -152,13 +152,6 @@
                 <version>5.14.2</version>
             </dependency>
 
-            <!-- JASYPT Configuration -->
-            <dependency>
-                <groupId>com.github.ulisesbocchio</groupId>
-                <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${jasypt-spring-boot-starter.version}</version>
-            </dependency>
-
             <!-- Hapi Fhir -->
             <dependency>
                 <groupId>ca.uhn.hapi.fhir</groupId>
@@ -314,6 +307,13 @@
             <version>${opensaml.version}</version>
         </dependency>
 
+        <!-- JASYPT Configuration -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt-spring-boot-starter.version}</version>
+        </dependency>
+
         <!-- Hazelcast -->
         <dependency>
             <groupId>com.hazelcast</groupId>
@@ -397,6 +397,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <!-- plugin version management-->
         <pluginManagement>
             <plugins>
@@ -420,6 +426,11 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.13</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.ulisesbocchio</groupId>
+                    <artifactId>jasypt-maven-plugin</artifactId>
+                    <version>${jasypt-spring-boot-starter.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
