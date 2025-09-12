@@ -31,7 +31,7 @@ management:
     enabled: false
   health:
     probes:
-      enabled: true 
+      enabled: true
 
 springdoc:
   swagger-ui:
@@ -98,11 +98,3 @@ vaccination:
       codeSystem: 2.16.840.1.113883.6.96
   documentType: 41000179103
   systemIdentifier: urn:ietf:rfc:3986
-
-jasypt:
-  encryptor:
-    password: ${JASYPT_ENCRYPTOR_PASSWORD:}
-    algorithm: PBEWithMD5AndDES
-    iv-generator-classname: org.jasypt.iv.RandomIvGenerator
-    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
-    string-output-type: base64

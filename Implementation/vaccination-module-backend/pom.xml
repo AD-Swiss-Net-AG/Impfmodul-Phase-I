@@ -36,7 +36,7 @@
         <tomcat.version>11.0.8</tomcat.version>
         <artifactory.repoUrl-sn>https://adswissnetag.jfrog.io/artifactory/ad-swiss-snapshot</artifactory.repoUrl-sn>
         <artifactory.repoUrl>https://adswissnetag.jfrog.io/artifactory/ad-swiss-release</artifactory.repoUrl>
-        <jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
+        <jasypt.version>3.0.5</jasypt.version>
     </properties>
 
     <repositories>
@@ -311,7 +311,7 @@
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>${jasypt-spring-boot-starter.version}</version>
+            <version>${jasypt.version}</version>
         </dependency>
 
         <!-- Hazelcast -->
@@ -424,7 +424,7 @@
                 <plugin>
                     <groupId>com.github.ulisesbocchio</groupId>
                     <artifactId>jasypt-maven-plugin</artifactId>
-                    <version>${jasypt-spring-boot-starter.version}</version>
+                    <version>${jasypt.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
