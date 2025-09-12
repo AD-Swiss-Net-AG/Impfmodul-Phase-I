@@ -421,11 +421,6 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.13</version>
                 </plugin>
-                <plugin>
-                    <groupId>com.github.ulisesbocchio</groupId>
-                    <artifactId>jasypt-maven-plugin</artifactId>
-                    <version>${jasypt.version}</version>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -541,6 +536,11 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-maven-plugin</artifactId>
+                <version>${jasypt.version}</version>
             </plugin>
         </plugins>
     </build>
